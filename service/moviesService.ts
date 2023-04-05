@@ -1,24 +1,24 @@
 import movieModel from "../model/movieModel";
 
-type awardsType = {
+type AwardsType = {
   wins: number;
   nominations: number;
   text: string;
 };
 
-type imdbType = {
+type ImdbType = {
   rating: number;
   votes: number;
   id: number;
 };
-type viewerType = {
+type ViewerType = {
   rating: number;
   numReviews: number;
   meter: number;
 };
-type tomatoesType = { viewer: viewerType; lastUpdated: Date };
+type TomatoesType = { viewer: ViewerType; lastUpdated: Date };
 
-interface movieType {
+interface MovieType {
   plot: string;
   genres: string[];
   runtime: number;
@@ -31,17 +31,17 @@ interface movieType {
   released: Date;
   directors: string[];
   rated?: string;
-  awards: awardsType;
+  awards: AwardsType;
   lastupdated: string;
   year: number;
-  imdb: imdbType;
+  imdb: ImdbType;
   countries: string[];
   type: string;
-  tomatoes: tomatoesType;
+  tomatoes: TomatoesType;
 }
 
-export async function getMovies(limit: number): Promise<movieType[] | null> {
-  let result: movieType[] | null = await movieModel
+export async function getMovies(limit: number): Promise<MovieType[] | null> {
+  let result: MovieType[] | null = await movieModel
     .find({
       poster: { $exists: true },
       year: { $exists: true },
@@ -49,5 +49,10 @@ export async function getMovies(limit: number): Promise<movieType[] | null> {
     .sort({ year: -1 })
     .limit(limit);
 
+  return result;
+}
+
+export async function getIdMovies(id: string): Promise<MovieType | null> {
+  let result: MovieType | null = await movieModel.findOne({ _id: id });
   return result;
 }
