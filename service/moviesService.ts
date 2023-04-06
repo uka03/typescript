@@ -47,7 +47,7 @@ export async function getMovies(limit: number): Promise<MovieType[] | null> {
       year: { $exists: true },
     })
     .skip(limit - 8)
-    .limit(8)
+    .limit(24)
     .select({ _id: 1, poster: 1, title: 1 });
 
   return result;
