@@ -1,3 +1,4 @@
+import exp from "constants";
 import movieModel from "../model/movieModel";
 
 type AwardsType = {
@@ -55,5 +56,10 @@ export async function getMovies(limit: number): Promise<MovieType[] | null> {
 
 export async function getIdMovies(id: string): Promise<MovieType | null> {
   let result: MovieType | null = await movieModel.findOne({ _id: id });
+  return result;
+}
+
+export async function getMoviesId(): Promise<MovieType[] | null> {
+  const result = await movieModel.find({}).select({ _id: 1 });
   return result;
 }

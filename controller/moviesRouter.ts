@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import { getIdMovies, getMovies } from "../service/moviesService";
+import { getIdMovies, getMovies, getMoviesId } from "../service/moviesService";
 // movieslastest;
 const Movies: Router = express.Router();
 
@@ -15,5 +15,13 @@ Movies.get("/movies", async (req: Request, res: Response): Promise<void> => {
     res.send(result);
   }
 });
+
+Movies.get(
+  "/movies_ids",
+  async (req: Request, res: Response): Promise<void> => {
+    const result = await getMoviesId();
+    res.send(result);
+  }
+);
 
 export default Movies;
